@@ -1,0 +1,19 @@
+---
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          curl -LO https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0posix-17.0.6-11.0.1-msvcrt-r4/winlibs-x86_64-posix-seh-gcc-13.2.0-llvm-17.0.6-mingw-w64msvcrt-11.0.1-r4.7z
+          7z x -y winlibs-x86_64-posix-seh-gcc-13.2.0-llvm-17.0.6-mingw-w64msvcrt-11.0.1-r4.7z
+      - run: mingw64/bin/clang -v
+      - run: mingw64/bin/clang test.c
+      - run: ./a.exe
